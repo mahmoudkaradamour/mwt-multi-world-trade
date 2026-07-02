@@ -38,12 +38,33 @@ export class AuthService {
       };
     }
 
+    const customerRole = await this.prisma.role.findUnique({
+      where: {
+        name: 'CUSTOMER',
+      },
+    });
+
+    if (!customerRole) {
+      return {
+        message: 'Default role not found',
+      };
+    }
+
     const hashedPassword = await bcrypt.hash(dto.password, 10);
 
     const user = await this.prisma.user.create({
       data: {
         email: dto.email,
         password: hashedPassword,
+
+        role: {
+          connect: {
+            id: customerRole.id,
+          },
+        },
+      },
+      include: {
+        role: true,
       },
     });
 
@@ -52,6 +73,7 @@ export class AuthService {
       user: {
         id: user.id,
         email: user.email,
+        role: user.role?.name,
       },
     };
   }
@@ -63,6 +85,9 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: {
         email: dto.email,
+      },
+      include: {
+        role: true,
       },
     });
 
@@ -86,6 +111,7 @@ export class AuthService {
     const payload = {
       sub: user.id,
       email: user.email,
+      role: user.role?.name,
     };
 
     const accessToken =
