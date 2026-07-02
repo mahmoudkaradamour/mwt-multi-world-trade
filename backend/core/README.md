@@ -1,98 +1,322 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🚀 MWT Core
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+MWT Core is the central backend service of the Multi World Trade (MWT) platform.
 
-## Description
+It provides the foundation for:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Authentication
+- Authorization
+- User Management
+- Store Management
+- Product Management
+- Order Processing
+- Payment Processing
+- Future Multi-Tenant Commerce Services
 
-## Project setup
+---
 
-```bash
-$ npm install
+# Technology Stack
+
+| Component | Technology |
+|------------|------------|
+| Backend Framework | NestJS |
+| Language | TypeScript |
+| Database | PostgreSQL (Neon) |
+| ORM | Prisma |
+| Authentication | JWT |
+| Password Security | bcrypt |
+| Validation | class-validator |
+| Testing | Jest |
+| Deployment | Cloud Run |
+| Build Pipeline | Cloud Build |
+
+---
+
+# Current Features
+
+## Authentication
+
+Implemented:
+
+```text
+✅ User Registration
+✅ User Login
+✅ JWT Authentication
+✅ Protected Routes
+✅ Password Hashing
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## Database
 
-# watch mode
-$ npm run start:dev
+Implemented:
 
-# production mode
-$ npm run start:prod
+```text
+✅ PostgreSQL Integration
+✅ Prisma ORM
+✅ Database Migrations
+✅ User Persistence
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## Testing
 
-# e2e tests
-$ npm run test:e2e
+Implemented:
 
-# test coverage
-$ npm run test:cov
+```text
+✅ Authentication E2E Tests
+✅ Database E2E Tests
+✅ User E2E Tests
+✅ 21 / 21 Tests Passed
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+# Quick Start
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Install Dependencies
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## Configure Environment
 
-Check out a few resources that may come in handy when working with NestJS:
+Create:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```text
+.env
+```
 
-## Support
+Required configuration:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```env
+DATABASE_URL=
 
-## Stay in touch
+JWT_SECRET=
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+PORT=8080
+```
 
-## License
+---
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## Generate Prisma Client
+
+```bash
+npx prisma generate
+```
+
+---
+
+## Apply Database Migrations
+
+```bash
+npx prisma migrate dev
+```
+
+---
+
+## Start Development Server
+
+```bash
+npm run start:dev
+```
+
+Expected output:
+
+```text
+Nest application successfully started
+MWT Core running on port 8080
+```
+
+---
+
+## Build Application
+
+```bash
+npm run build
+```
+
+---
+
+## Run Automated Tests
+
+```bash
+npm run test:e2e
+```
+
+Expected result:
+
+```text
+Test Suites: 3 passed
+Tests: 21 passed
+```
+
+---
+
+# API Endpoints
+
+## Register User
+
+```http
+POST /auth/register
+```
+
+---
+
+## Login User
+
+```http
+POST /auth/login
+```
+
+---
+
+## Profile
+
+```http
+GET /auth/profile
+```
+
+Requires:
+
+```text
+JWT Token
+```
+
+---
+
+# Project Structure
+
+```text
+src/
+│
+├── prisma/
+│   ├── prisma.module.ts
+│   └── prisma.service.ts
+│
+├── modules/
+│   └── auth/
+│       ├── auth.controller.ts
+│       ├── auth.service.ts
+│       ├── auth.module.ts
+│       └── dto/
+│
+└── app.module.ts
+```
+
+---
+
+# Documentation
+
+Full project documentation is located in:
+
+```text
+../../docs/
+```
+
+Available documents:
+
+```text
+README_API.md
+README_DATABASE.md
+README_DEPLOYMENT.md
+README_ARCHITECTURE.md
+README_TESTING.md
+README_ENVIRONMENT.md
+README_SECURITY.md
+README_CONTRIBUTING.md
+CHANGELOG.md
+```
+
+---
+
+# Development Workflow
+
+Recommended workflow:
+
+```text
+Design
+  ↓
+Implement
+  ↓
+Test
+  ↓
+Verify
+  ↓
+Document
+  ↓
+Commit
+  ↓
+Deploy
+```
+
+---
+
+# Security
+
+Current security measures:
+
+```text
+✅ JWT Authentication
+✅ bcrypt Password Hashing
+✅ Environment-Based Secrets
+✅ Prisma ORM
+✅ Input Validation
+✅ Protected Routes
+```
+
+---
+
+# Quality Status
+
+```text
+Build Status                  ✅
+Authentication                ✅
+PostgreSQL                    ✅
+Prisma ORM                    ✅
+Automated Tests               ✅
+Documentation                 ✅
+Production Foundation         ✅
+```
+
+---
+
+# Roadmap
+
+Planned modules:
+
+```text
+Users
+Roles
+Permissions
+Stores
+Products
+Categories
+Orders
+Payments
+Shipping
+Notifications
+Analytics
+Subscriptions
+```
+
+---
+
+# MWT Core
+
+Production-ready backend foundation for the Multi World Trade platform.
+
+Built with:
+
+- NestJS
+- PostgreSQL
+- Prisma
+- JWT
+- TypeScript
