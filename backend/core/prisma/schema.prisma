@@ -31,15 +31,31 @@ model Role {
   createdAt   DateTime         @default(now())
 }
 
+model RoleTemplate {
+  id          String                   @id @default(uuid())
+
+  name        String                   @unique
+
+  description String?
+
+  isSystem    Boolean                  @default(true)
+
+  permissions RoleTemplatePermission[]
+
+  createdAt   DateTime                 @default(now())
+}
+
 model Permission {
-  id          String           @id @default(uuid())
+  id          String                   @id @default(uuid())
 
   resource    String
   action      String
 
   roles       RolePermission[]
 
-  createdAt   DateTime         @default(now())
+  templates   RoleTemplatePermission[]
+
+  createdAt   DateTime                 @default(now())
 
   @@unique([resource, action])
 }
@@ -57,4 +73,19 @@ model RolePermission {
   createdAt    DateTime     @default(now())
 
   @@unique([roleId, permissionId])
+}
+
+model RoleTemplatePermission {
+  id             String         @id @default(uuid())
+
+  roleTemplateId String
+  permissionId   String
+
+  roleTemplate   RoleTemplate   @relation(fields: [roleTemplateId], references: [id], onDelete: Cascade)
+
+  permission     Permission     @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  createdAt      DateTime       @default(now())
+
+  @@unique([roleTemplateId, permissionId])
 }
