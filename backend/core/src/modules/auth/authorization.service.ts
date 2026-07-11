@@ -14,6 +14,7 @@ interface PermissionCheck {
  * - Permission resolution
  * - Permission evaluation
  * - Authorization checks
+ * - Multi-role permission aggregation
  */
 @Injectable()
 export class AuthorizationService {
@@ -23,6 +24,9 @@ export class AuthorizationService {
 
   /**
    * Get all effective permissions for a user.
+   *
+   * Effective permissions are calculated as
+   * the union of permissions from all assigned roles.
    */
   async getUserPermissions(userId: string) {
     const user = await this.prisma.user.findUnique({
@@ -30,11 +34,15 @@ export class AuthorizationService {
         id: userId,
       },
       include: {
-        role: {
+        roles: {
           include: {
-            permissions: {
+            role: {
               include: {
-                permission: true,
+                permissions: {
+                  include: {
+                    permission: true,
+                  },
+                },
               },
             },
           },
@@ -42,18 +50,35 @@ export class AuthorizationService {
       },
     });
 
-    if (!user || !user.role) {
+    if (!user) {
       return [];
     }
 
-    return user.role.permissions.map(
-      (rolePermission) => ({
-        resource:
-          rolePermission.permission.resource,
-        action:
-          rolePermission.permission.action,
-      }),
+    const permissions = user.roles.flatMap(
+      (userRole) =>
+        userRole.role.permissions.map(
+          (rolePermission) => ({
+            resource:
+              rolePermission.permission.resource,
+            action:
+              rolePermission.permission.action,
+          }),
+        ),
     );
+
+    /**
+     * Remove duplicate permissions.
+     */
+    const uniquePermissions = Array.from(
+      new Map(
+        permissions.map((permission) => [
+          `${permission.resource}:${permission.action}`,
+          permission,
+        ]),
+      ).values(),
+    );
+
+    return uniquePermissions;
   }
 
   /**
