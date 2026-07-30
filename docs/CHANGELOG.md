@@ -1027,6 +1027,319 @@ Multi-Role Architecture             ✅
 
 Ready For Role Assignment Engine    ✅
 ```
+
+# [1.2.0] - Role Assignment Engine
+
+## Added
+
+### Role Assignment Service
+
+Implemented:
+
+```text
+RoleAssignmentService
+```
+
+Responsibilities:
+
+```text
+Assign Role
+
+Remove Role
+
+List User Roles
+
+Validate Assignments
+
+Prevent Duplicate Assignments
+```
+
+The platform now provides a dedicated business layer for role assignment operations instead of relying on direct UserRole manipulation.
+
+---
+
+### Assignment Validation
+
+Implemented validation rules for:
+
+```text
+User Existence
+
+Role Existence
+
+Duplicate Assignment Prevention
+
+Assignment Integrity
+```
+
+All role assignments are validated before persistence.
+
+---
+
+### Role Assignment Workflow
+
+Implemented:
+
+```text
+Assignment Request
+        ↓
+
+Validate User
+        ↓
+
+Validate Role
+        ↓
+
+Check Existing Assignment
+        ↓
+
+Create UserRole
+        ↓
+
+Return Success
+```
+
+---
+
+### Role Removal Workflow
+
+Implemented:
+
+```text
+Role Removal Request
+        ↓
+
+Validate User
+        ↓
+
+Validate Role
+        ↓
+
+Validate Assignment Exists
+        ↓
+
+Delete UserRole
+        ↓
+
+Return Success
+```
+
+---
+
+### User Role Retrieval
+
+Implemented support for:
+
+```text
+Retrieve Assigned Roles
+
+List User Roles
+
+Role Assignment Inspection
+```
+
+The platform can now return all roles assigned to a user account through a dedicated service layer.
+
+---
+
+### Assignment Security Foundation
+
+Implemented:
+
+```text
+Duplicate Assignment Prevention
+
+User Validation
+
+Role Validation
+
+Assignment Integrity Validation
+```
+
+Prepared architecture for:
+
+```text
+Privilege Escalation Protection
+
+Tenant-Aware Assignment Validation
+
+Audit Logging
+
+Assignment Policies
+```
+
+Future security enhancements can now be integrated without redesigning the assignment architecture.
+
+---
+
+### Authorization Integration
+
+Integrated role assignment workflows with:
+
+```text
+AuthorizationService
+```
+
+Role assignments now immediately affect effective permission resolution.
+
+Architecture:
+
+```text
+User
+ ↓
+UserRole
+ ↓
+Role
+ ↓
+RolePermission
+ ↓
+Permission
+```
+
+---
+
+### Documentation
+
+Created:
+
+```text
+README_ROLE_ASSIGNMENT.md
+```
+
+Updated:
+
+```text
+README_AUTHORIZATION.md
+
+README_AUTHORIZATION_TESTING.md
+
+README_ARCHITECTURE.md
+
+CHANGELOG.md
+
+CORE_ENGINE_ROADMAP.md
+```
+
+---
+
+### Testing
+
+Created:
+
+```text
+role-assignment.e2e-spec.ts
+```
+
+Coverage:
+
+```text
+Role Assignment
+
+Role Removal
+
+Role Retrieval
+
+Assignment Validation
+
+Duplicate Prevention
+
+Missing User Protection
+
+Missing Role Protection
+
+Authorization Integration
+```
+
+---
+
+## Validation
+
+Executed:
+
+```bash
+npm run build
+
+npm run test:e2e
+```
+
+Result:
+
+```text
+Build Passed                 ✅
+
+Test Suites                  ✅ 10 / 10
+
+Tests Passed                 ✅ 105 / 105
+```
+
+Status:
+
+```text
+PASSED ✅
+```
+
+---
+
+## Architecture Expansion
+
+Previous authorization administration model:
+
+```text
+User
+ ↓
+UserRole
+ ↓
+Role
+```
+
+Current administration model:
+
+```text
+RoleAssignmentService
+           ↓
+
+User
+ ↓
+UserRole
+ ↓
+Role
+ ↓
+RolePermission
+ ↓
+Permission
+```
+
+This introduces a dedicated assignment control layer and prepares the platform for future authorization governance.
+
+---
+
+## Phase Status
+
+```text
+Phase 2 — Role Assignment Engine
+
+COMPLETED ✅
+```
+
+---
+
+## Project Status
+
+```text
+Authentication Foundation           ✅
+
+IAM Foundation                      ✅
+
+Authorization Foundation            ✅
+
+Role Templates Foundation           ✅
+
+Multi-Role Architecture             ✅
+
+Role Assignment Engine              ✅
+
+Ready For Role Template Runtime     ✅
+```
 # Current Platform Status
 
 ## Completed
@@ -1070,7 +1383,7 @@ Ready For Role Assignment Engine    ✅
 ## In Progress
 
 ```text
-🔄 Role Assignment Engine
+🔄 Role Template Runtime Engine
 ```
 
 ---
@@ -1078,8 +1391,6 @@ Ready For Role Assignment Engine    ✅
 ## Planned
 
 ```text
-
-🕒 Role Assignment Engine
 
 🕒 Role Template Runtime Engine
 
@@ -1155,9 +1466,9 @@ Authorization                 ✅
 
 Security Validation           ✅
 
-Test Suites                   ✅ 9 / 9
+Test Suites                   ✅ 10 / 10
 
-Automated Tests               ✅ 91 / 91
+Automated Tests               ✅ 105 / 105
 ```
 
 ---
@@ -1167,3 +1478,5 @@ Automated Tests               ✅ 91 / 91
 The project has evolved from a simple authentication backend into a fully tested and enterprise-oriented platform foundation featuring authentication, authorization, role templates, multi-role assignments, automated validation, and production-grade architecture.
 
 The authorization platform now supports enterprise-grade multi-role permission aggregation, providing the foundation required for employee management, organizational structures, tenant isolation, role assignment workflows, and future platform expansion.
+
+The platform now includes a dedicated Role Assignment Engine capable of safely assigning roles, removing roles, validating assignments, preventing duplicate assignments, and integrating role changes directly into the authorization resolution process.

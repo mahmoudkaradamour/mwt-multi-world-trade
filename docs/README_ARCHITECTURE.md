@@ -244,7 +244,13 @@ Responsibilities:
 - User authentication
 - Password hashing
 - JWT generation
-- Access control
+- Profile retrieval
+- Authorization
+- Permission resolution
+- Multi-role support
+- Role assignment
+- Role validation
+- Future privilege escalation protection
 
 ---
 
@@ -261,21 +267,28 @@ Responsibilities:
 # Planned Modules
 
 ```text
-Users Module
-Roles Module
-Permissions Module
-Stores Module
-Products Module
-Categories Module
-Orders Module
-OrderItems Module
-Payments Module
-Coupons Module
-Reviews Module
+Tenant Module
+Organization Module
+Store Module
+Catalog Module
+Inventory Module
+Customer Module
+Cart Module
+Order Module
+Payment Module
 Shipping Module
-Notifications Module
-Subscriptions Module
+Notification Module
+Search Module
 Analytics Module
+Media Module
+Events Module
+Audit Module
+I18N Module
+SEO Module
+Theme Module
+Dynamic Configuration Module
+Governance Module
+Plugin Module
 ```
 
 ---
@@ -301,6 +314,88 @@ PrismaService
 
 PostgreSQL
 ```
+
+---
+
+# Authorization Architecture
+
+MWT implements Role-Based Access Control (RBAC).
+
+Current authorization hierarchy:
+
+User
+ ↓
+UserRole
+ ↓
+Role
+ ↓
+RolePermission
+ ↓
+Permission
+
+Permissions follow:
+
+Resource.Action
+
+Examples:
+
+users.read
+users.create
+products.update
+orders.manage
+store.approve
+
+---
+
+# Multi-Role Architecture
+
+MWT supports assigning multiple roles to the same user.
+
+Architecture:
+
+User
+ ↓
+UserRole
+ ↓
+Role
+
+Example:
+
+User
+├── Inventory Manager
+├── Product Manager
+└── Customer Support
+
+Effective permissions are calculated as the union of permissions granted by all assigned roles.
+
+Duplicate role assignments are prohibited.
+
+---
+
+# Role Assignment Architecture
+
+Role assignment is handled through a dedicated service layer.
+
+Role Assignment Service Responsibilities:
+
+- Assign Role
+- Remove Role
+- List User Roles
+- Validate Assignments
+- Prevent Duplicate Assignments
+
+Current validations:
+
+- User Exists
+- Role Exists
+- Duplicate Prevention
+
+Future validations:
+
+- Privilege Escalation Protection
+- Tenant Scope Validation
+- Store Scope Validation
+- Audit Logging
 
 ---
 
@@ -448,14 +543,34 @@ Recommendation Data
 
 # Current Database Model
 
-```prisma
-model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-}
-```
+Current Core Models
+
+User
+Role
+UserRole
+Permission
+RolePermission
+RoleTemplate
+RoleTemplatePermission
+
+
+ثم رسم:
+
+User
+ ↓
+UserRole
+ ↓
+Role
+ ↓
+RolePermission
+ ↓
+Permission
+
+RoleTemplate
+ ↓
+RoleTemplatePermission
+ ↓
+Permission
 
 ---
 
@@ -545,8 +660,14 @@ Current testing coverage includes:
 
 ```text
 Authentication Testing
-Database Testing
+Authorization Testing
+Permission Testing
+Role Permission Testing
+Role Template Testing
+UserRole Testing
+Role Assignment Testing
 User Testing
+Database Testing
 ```
 
 Automation:
@@ -561,13 +682,25 @@ Prisma Integration Tests
 
 # Test Coverage Status
 
-```text
-Authentication E2E      ✅
-Database E2E            ✅
-User E2E                ✅
+Latest Verified Quality Gate
 
-Total:
-21 / 21 Tests Passed
+```text
+Authentication E2E           ✅
+Authorization E2E            ✅
+Permission E2E               ✅
+Permission Guard E2E         ✅
+Role Permission E2E          ✅
+Role Template E2E            ✅
+User Role E2E                ✅
+Role Assignment E2E          ✅
+User E2E                     ✅
+Database E2E                 ✅
+
+Test Suites:
+10 / 10 Passed
+
+Tests:
+105 / 105 Passed
 ```
 
 ---
@@ -656,23 +789,66 @@ mwt-multi-world-trade/
 # Current Architecture Status
 
 ```text
-NestJS Backend                 ✅
-Prisma ORM                     ✅
-PostgreSQL                     ✅
-JWT Authentication             ✅
-ConfigModule                   ✅
-Environment-Based Secrets      ✅
-Automated E2E Testing          ✅
-Modular Architecture           ✅
-Documentation Suite            ✅
+NestJS Backend                          ✅
+Prisma ORM                              ✅
+PostgreSQL                              ✅
+JWT Authentication                      ✅
+User Management                         ✅
+Role System                             ✅
+Permission System                       ✅
+RolePermission System                   ✅
+Authorization Service                   ✅
+Permission Guard                        ✅
+Role Templates                          ✅
+Role Template Permissions               ✅
+Multi-Role Architecture                 ✅
+UserRole Model                          ✅
+Role Assignment Engine                  ✅
+Automated E2E Testing                   ✅
+Modular Architecture                    ✅
+Documentation Suite                     ✅
 
-MongoDB Integration            Planned
-Store Management               Planned
-Product Catalog                Planned
-Orders System                  Planned
-Payments System                Planned
-Multi-Tenant Isolation         Planned
+Tenant Foundation                       Planned
+Security Foundation                     Planned
+Audit System                            Planned
+Internationalization                    Planned
+SEO Foundation                          Planned
+Commerce Engine                         Planned
+Plugin Architecture                     Planned
+API Stabilization                       Planned
 ```
+
+---
+
+# Core Engine Roadmap
+
+The official execution tracker for backend development is:
+
+docs/CORE_ENGINE_ROADMAP.md
+
+All backend phases must follow:
+
+Design
+↓
+Document
+↓
+Implement
+↓
+Migrate
+↓
+Seed
+↓
+Test
+↓
+Verify
+↓
+Update Documentation
+↓
+Commit
+↓
+Push
+↓
+Mark Completed
 
 ---
 

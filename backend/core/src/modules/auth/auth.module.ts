@@ -1,29 +1,17 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
-import { AuthController } from './auth.controller';
-
-import { AuthService } from './auth.service';
-import { AuthorizationService } from './authorization.service';
-
-import { PermissionGuard } from './guards/permission.guard';
-
 import { PrismaModule } from '../../prisma/prisma.module';
 
-/**
- * Authentication Module.
- *
- * Provides:
- * - User registration
- * - User login
- * - JWT authentication
- * - Permission resolution
- * - Authorization services
- */
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { AuthorizationService } from './authorization.service';
+import { RoleAssignmentService } from './role-assignment.service';
+import { PermissionGuard } from './guards/permission.guard';
+
 @Module({
   imports: [
     PrismaModule,
-
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
@@ -39,11 +27,13 @@ import { PrismaModule } from '../../prisma/prisma.module';
   providers: [
     AuthService,
     AuthorizationService,
+    RoleAssignmentService,
     PermissionGuard,
   ],
 
   exports: [
     AuthorizationService,
+    RoleAssignmentService,
     PermissionGuard,
   ],
 })
