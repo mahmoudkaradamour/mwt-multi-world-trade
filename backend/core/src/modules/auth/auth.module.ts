@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AuthorizationService } from './authorization.service';
 import { RoleAssignmentService } from './role-assignment.service';
+import { RoleTemplateService } from './role-template.service';
 import { PermissionGuard } from './guards/permission.guard';
 
 @Module({
@@ -19,21 +20,20 @@ import { PermissionGuard } from './guards/permission.guard';
       },
     }),
   ],
-
   controllers: [
     AuthController,
   ],
-
   providers: [
     AuthService,
     AuthorizationService,
     RoleAssignmentService,
+    RoleTemplateService,
     PermissionGuard,
   ],
-
   exports: [
     AuthorizationService,
     RoleAssignmentService,
+    RoleTemplateService,
     PermissionGuard,
   ],
 })
